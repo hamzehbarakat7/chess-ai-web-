@@ -1,0 +1,268 @@
+<html lang="en" dir="ltr"><head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/ctr.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Pixel Chess is a chess engine written in pure JavaScript. It plays at roughly 1,500 ELO and is being actively developed to be stronger.">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="js/chessboard.js"></script>
+
+    <title>
+        Pixel Chess | Play Chess vs. AI
+    </title>
+</head>
+<body>
+    <main x-data="{
+            gameStarted: false,
+            howItWorksOpen: false,
+            creditsOpen: false,
+            aiSettingsOpen: false,
+        }" class="w-screen h-screen flex items-center justify-center screen">
+        <section x-show="gameStarted === true" x-transition="" style="display: none;">
+
+            <div class="flex flex-row items-center justify-center">
+                <div class="hidden w-64 lg:flex flex-col items-end">
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.w.p">
+                            <img src="/img/chesspieces/font-awesome/wP.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.w.n">
+                            <img src="/img/chesspieces/font-awesome/wN.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.w.b">
+                            <img src="/img/chesspieces/font-awesome/wB.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.w.r">
+                            <img src="/img/chesspieces/font-awesome/wR.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.w.q">
+                            <img src="/img/chesspieces/font-awesome/wQ.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                </div>
+
+                <div id="board" class="w-screen lg:w-104 flex justify-center mb-5 p-5 lg:p-0"><div class="chessboard-63f37"><div class="board-b72b1" style="width: 504px;"><div class="row-5277c"><div class="square-55d63 white-1e1d7 square-a8" style="width:63px;height:63px;" id="a8-d816-063c-2e06-edb6-f634-1c6e-324f-2367" data-square="a8"><div class="notation-322f9 numeric-fc462">8</div><img src="./img/chesspieces/font-awesome/bR.svg" alt="" class="piece-417db" data-piece="bR" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-b8" style="width:63px;height:63px;" id="b8-3836-3efe-26df-f362-f352-bbdc-6d15-07b6" data-square="b8"><img src="./img/chesspieces/font-awesome/bN.svg" alt="" class="piece-417db" data-piece="bN" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-c8" style="width:63px;height:63px;" id="c8-1cd3-3455-4c54-5a48-c20f-d1ca-777a-155f" data-square="c8"><img src="./img/chesspieces/font-awesome/bB.svg" alt="" class="piece-417db" data-piece="bB" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-d8" style="width:63px;height:63px;" id="d8-4ba9-bda9-a0c0-9774-a7d2-b1e1-de49-a132" data-square="d8"><img src="./img/chesspieces/font-awesome/bQ.svg" alt="" class="piece-417db" data-piece="bQ" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-e8" style="width:63px;height:63px;" id="e8-ae76-cf45-8f3b-b6d5-7353-2c03-655f-a824" data-square="e8"><img src="./img/chesspieces/font-awesome/bK.svg" alt="" class="piece-417db" data-piece="bK" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-f8" style="width:63px;height:63px;" id="f8-0a94-b658-9a0e-2975-52b8-853e-ad37-c5c1" data-square="f8"><img src="./img/chesspieces/font-awesome/bB.svg" alt="" class="piece-417db" data-piece="bB" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-g8" style="width:63px;height:63px;" id="g8-2887-40ec-a708-2ae2-88d6-09b4-2eda-fb23" data-square="g8"><img src="./img/chesspieces/font-awesome/bN.svg" alt="" class="piece-417db" data-piece="bN" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-h8" style="width:63px;height:63px;" id="h8-135b-b6be-ff28-f184-2961-b48f-c6c0-fe86" data-square="h8"><img src="./img/chesspieces/font-awesome/bR.svg" alt="" class="piece-417db" data-piece="bR" style="width:63px;height:63px;"></div><div class="clearfix-7da63"></div></div><div class="row-5277c"><div class="square-55d63 black-3c85d square-a7" style="width:63px;height:63px;" id="a7-51da-80f4-9815-ae38-5efb-aae9-08f8-914c" data-square="a7"><div class="notation-322f9 numeric-fc462">7</div><img src="./img/chesspieces/font-awesome/bP.svg" alt="" class="piece-417db" data-piece="bP" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-b7" style="width:63px;height:63px;" id="b7-22f8-5d3a-c8f5-5aa1-bac4-5f58-df70-62c3" data-square="b7"><img src="./img/chesspieces/font-awesome/bP.svg" alt="" class="piece-417db" data-piece="bP" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-c7" style="width:63px;height:63px;" id="c7-090c-c4be-6a09-9c56-146a-8bd2-6256-c3ef" data-square="c7"><img src="./img/chesspieces/font-awesome/bP.svg" alt="" class="piece-417db" data-piece="bP" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-d7" style="width:63px;height:63px;" id="d7-f81b-684a-8127-0397-3e88-f968-226d-6f1d" data-square="d7"><img src="./img/chesspieces/font-awesome/bP.svg" alt="" class="piece-417db" data-piece="bP" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-e7" style="width:63px;height:63px;" id="e7-fe5c-8ddc-0643-e2ad-349e-a138-b208-fb99" data-square="e7"><img src="./img/chesspieces/font-awesome/bP.svg" alt="" class="piece-417db" data-piece="bP" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-f7" style="width:63px;height:63px;" id="f7-bc5f-8bd4-ca03-fffc-6d31-74f1-c417-b7b6" data-square="f7"><img src="./img/chesspieces/font-awesome/bP.svg" alt="" class="piece-417db" data-piece="bP" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-g7" style="width:63px;height:63px;" id="g7-ab88-2839-4c03-d244-bb7e-e10d-a4fd-e5aa" data-square="g7"><img src="./img/chesspieces/font-awesome/bP.svg" alt="" class="piece-417db" data-piece="bP" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-h7" style="width:63px;height:63px;" id="h7-f73a-e5da-f3b8-cfef-56bd-f3b3-594a-d865" data-square="h7"><img src="./img/chesspieces/font-awesome/bP.svg" alt="" class="piece-417db" data-piece="bP" style="width:63px;height:63px;"></div><div class="clearfix-7da63"></div></div><div class="row-5277c"><div class="square-55d63 white-1e1d7 square-a6" style="width:63px;height:63px;" id="a6-2957-5089-d01c-8e9d-cfca-7217-0cee-b0a8" data-square="a6"><div class="notation-322f9 numeric-fc462">6</div></div><div class="square-55d63 black-3c85d square-b6" style="width:63px;height:63px;" id="b6-d95c-17c5-96e4-5d91-4327-9ada-b4d1-42da" data-square="b6"></div><div class="square-55d63 white-1e1d7 square-c6" style="width:63px;height:63px;" id="c6-432f-8be3-b215-b6c9-1142-24de-66d8-3e5b" data-square="c6"></div><div class="square-55d63 black-3c85d square-d6" style="width:63px;height:63px;" id="d6-dda9-263c-0c2f-e14f-7195-324b-0c92-67a3" data-square="d6"></div><div class="square-55d63 white-1e1d7 square-e6" style="width:63px;height:63px;" id="e6-95ad-1c47-672f-9a90-b902-35a1-34e6-6364" data-square="e6"></div><div class="square-55d63 black-3c85d square-f6" style="width:63px;height:63px;" id="f6-cf5c-ea4c-1cd7-35b3-862d-50d5-5b89-1c12" data-square="f6"></div><div class="square-55d63 white-1e1d7 square-g6" style="width:63px;height:63px;" id="g6-da30-4dc8-dc2a-a4be-0c82-6488-738f-3397" data-square="g6"></div><div class="square-55d63 black-3c85d square-h6" style="width:63px;height:63px;" id="h6-d308-33f3-67da-e377-4dbf-982b-1583-6d25" data-square="h6"></div><div class="clearfix-7da63"></div></div><div class="row-5277c"><div class="square-55d63 black-3c85d square-a5" style="width:63px;height:63px;" id="a5-3761-a579-e5c9-6085-2632-c61c-e269-136b" data-square="a5"><div class="notation-322f9 numeric-fc462">5</div></div><div class="square-55d63 white-1e1d7 square-b5" style="width:63px;height:63px;" id="b5-90b2-1fe6-90da-1e96-5bcf-c9d1-348f-32ff" data-square="b5"></div><div class="square-55d63 black-3c85d square-c5" style="width:63px;height:63px;" id="c5-9e67-bfbf-e5ed-a1c8-ef7d-e16c-4e40-584a" data-square="c5"></div><div class="square-55d63 white-1e1d7 square-d5" style="width:63px;height:63px;" id="d5-506b-8a63-4ac2-e9fa-0215-5495-21e1-165d" data-square="d5"></div><div class="square-55d63 black-3c85d square-e5" style="width:63px;height:63px;" id="e5-1dd6-f773-e3e7-4852-f71a-3144-74c7-8173" data-square="e5"></div><div class="square-55d63 white-1e1d7 square-f5" style="width:63px;height:63px;" id="f5-8db9-8713-4ada-7a92-8008-75bc-6356-9461" data-square="f5"></div><div class="square-55d63 black-3c85d square-g5" style="width:63px;height:63px;" id="g5-4c20-d898-361c-06da-141b-8d20-b0b7-0330" data-square="g5"></div><div class="square-55d63 white-1e1d7 square-h5" style="width:63px;height:63px;" id="h5-5303-fa5e-ead3-a99c-76f1-0c09-4eb7-5aa7" data-square="h5"></div><div class="clearfix-7da63"></div></div><div class="row-5277c"><div class="square-55d63 white-1e1d7 square-a4" style="width:63px;height:63px;" id="a4-cdf2-56dc-93bd-cd37-9a4f-45c9-df8c-1df9" data-square="a4"><div class="notation-322f9 numeric-fc462">4</div></div><div class="square-55d63 black-3c85d square-b4" style="width:63px;height:63px;" id="b4-5a78-c5e8-55e8-582d-6f7e-4dff-0da9-002c" data-square="b4"></div><div class="square-55d63 white-1e1d7 square-c4" style="width:63px;height:63px;" id="c4-b4d6-8739-77f9-ec73-6746-7201-62eb-ada9" data-square="c4"></div><div class="square-55d63 black-3c85d square-d4" style="width:63px;height:63px;" id="d4-b0b1-dd44-551f-3ab4-0ca4-f26d-2776-01d8" data-square="d4"></div><div class="square-55d63 white-1e1d7 square-e4" style="width:63px;height:63px;" id="e4-2681-cb5f-4ee9-2278-4222-dc59-2069-3858" data-square="e4"></div><div class="square-55d63 black-3c85d square-f4" style="width:63px;height:63px;" id="f4-19f7-1c74-5bb8-1c7e-0a32-ff62-1123-f8c9" data-square="f4"></div><div class="square-55d63 white-1e1d7 square-g4" style="width:63px;height:63px;" id="g4-ad68-1d8e-f1d4-4c0a-b34f-bd59-b392-7b59" data-square="g4"></div><div class="square-55d63 black-3c85d square-h4" style="width:63px;height:63px;" id="h4-67a2-71df-66f9-7e46-e40c-ce9f-1d95-af48" data-square="h4"></div><div class="clearfix-7da63"></div></div><div class="row-5277c"><div class="square-55d63 black-3c85d square-a3" style="width:63px;height:63px;" id="a3-f448-98d7-dca3-27b5-3ca3-cf1a-ae6d-f2a1" data-square="a3"><div class="notation-322f9 numeric-fc462">3</div></div><div class="square-55d63 white-1e1d7 square-b3" style="width:63px;height:63px;" id="b3-8315-ca70-9806-ce89-6c78-5e68-538f-faa9" data-square="b3"></div><div class="square-55d63 black-3c85d square-c3" style="width:63px;height:63px;" id="c3-5cd7-902e-6518-e6be-2de4-ae76-e6b7-c548" data-square="c3"></div><div class="square-55d63 white-1e1d7 square-d3" style="width:63px;height:63px;" id="d3-03b4-d453-e3b2-706f-6adc-dce3-6f1e-6269" data-square="d3"></div><div class="square-55d63 black-3c85d square-e3" style="width:63px;height:63px;" id="e3-d806-8a52-485c-1bd0-c899-9528-7381-63ec" data-square="e3"></div><div class="square-55d63 white-1e1d7 square-f3" style="width:63px;height:63px;" id="f3-2bde-30a0-124b-aa27-d1ca-f8f9-efd5-14ec" data-square="f3"></div><div class="square-55d63 black-3c85d square-g3" style="width:63px;height:63px;" id="g3-004f-0761-73c1-a0cc-d0c0-2b63-237c-0647" data-square="g3"></div><div class="square-55d63 white-1e1d7 square-h3" style="width:63px;height:63px;" id="h3-febd-5945-a322-d71b-cfa3-11ac-0688-875b" data-square="h3"></div><div class="clearfix-7da63"></div></div><div class="row-5277c"><div class="square-55d63 white-1e1d7 square-a2" style="width:63px;height:63px;" id="a2-6e60-d5ad-91f6-90f2-ed90-f03e-a1e6-4958" data-square="a2"><div class="notation-322f9 numeric-fc462">2</div><img src="./img/chesspieces/font-awesome/wP.svg" alt="" class="piece-417db" data-piece="wP" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-b2" style="width:63px;height:63px;" id="b2-8ea8-da8c-b546-e5d9-795b-cb12-382d-7946" data-square="b2"><img src="./img/chesspieces/font-awesome/wP.svg" alt="" class="piece-417db" data-piece="wP" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-c2" style="width:63px;height:63px;" id="c2-b776-cbaf-edc8-98c9-9e18-c995-2790-c3c5" data-square="c2"><img src="./img/chesspieces/font-awesome/wP.svg" alt="" class="piece-417db" data-piece="wP" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-d2" style="width:63px;height:63px;" id="d2-5ed0-d3eb-d826-e65a-db63-de0f-ccd3-fe77" data-square="d2"><img src="./img/chesspieces/font-awesome/wP.svg" alt="" class="piece-417db" data-piece="wP" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-e2" style="width:63px;height:63px;" id="e2-4e64-f5d3-86a0-e759-1f29-a23e-4409-34a9" data-square="e2"><img src="./img/chesspieces/font-awesome/wP.svg" alt="" class="piece-417db" data-piece="wP" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-f2" style="width:63px;height:63px;" id="f2-4965-7afc-9b98-840f-d43b-55c6-8c1e-3d85" data-square="f2"><img src="./img/chesspieces/font-awesome/wP.svg" alt="" class="piece-417db" data-piece="wP" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-g2" style="width:63px;height:63px;" id="g2-9c51-4cc7-9edd-10d0-19f8-70a9-83e0-59c8" data-square="g2"><img src="./img/chesspieces/font-awesome/wP.svg" alt="" class="piece-417db" data-piece="wP" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-h2" style="width:63px;height:63px;" id="h2-4f97-6305-b305-91c5-b890-3c5a-bb49-5f7a" data-square="h2"><img src="./img/chesspieces/font-awesome/wP.svg" alt="" class="piece-417db" data-piece="wP" style="width:63px;height:63px;"></div><div class="clearfix-7da63"></div></div><div class="row-5277c"><div class="square-55d63 black-3c85d square-a1" style="width:63px;height:63px;" id="a1-243d-7d91-58ac-ce33-b319-6dd8-5ca5-6fab" data-square="a1"><div class="notation-322f9 alpha-d2270">a</div><div class="notation-322f9 numeric-fc462">1</div><img src="./img/chesspieces/font-awesome/wR.svg" alt="" class="piece-417db" data-piece="wR" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-b1" style="width:63px;height:63px;" id="b1-ff5e-503e-ea7d-3536-cdee-3ba3-bf57-be9f" data-square="b1"><div class="notation-322f9 alpha-d2270">b</div><img src="./img/chesspieces/font-awesome/wN.svg" alt="" class="piece-417db" data-piece="wN" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-c1" style="width:63px;height:63px;" id="c1-2d4f-a678-917d-a445-0e7d-4be4-240b-72df" data-square="c1"><div class="notation-322f9 alpha-d2270">c</div><img src="./img/chesspieces/font-awesome/wB.svg" alt="" class="piece-417db" data-piece="wB" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-d1" style="width:63px;height:63px;" id="d1-bb6d-1e58-7cf8-8e3e-bfa9-df1f-e162-f114" data-square="d1"><div class="notation-322f9 alpha-d2270">d</div><img src="./img/chesspieces/font-awesome/wQ.svg" alt="" class="piece-417db" data-piece="wQ" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-e1" style="width:63px;height:63px;" id="e1-a6f1-5bec-e4a8-7e53-75ad-9d6e-4735-0ac7" data-square="e1"><div class="notation-322f9 alpha-d2270">e</div><img src="./img/chesspieces/font-awesome/wK.svg" alt="" class="piece-417db" data-piece="wK" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-f1" style="width:63px;height:63px;" id="f1-04ee-6313-ea82-8397-3e81-c9a5-bc7b-88af" data-square="f1"><div class="notation-322f9 alpha-d2270">f</div><img src="./img/chesspieces/font-awesome/wB.svg" alt="" class="piece-417db" data-piece="wB" style="width:63px;height:63px;"></div><div class="square-55d63 black-3c85d square-g1" style="width:63px;height:63px;" id="g1-0157-94e2-4616-d692-f56d-d311-de80-9206" data-square="g1"><div class="notation-322f9 alpha-d2270">g</div><img src="./img/chesspieces/font-awesome/wN.svg" alt="" class="piece-417db" data-piece="wN" style="width:63px;height:63px;"></div><div class="square-55d63 white-1e1d7 square-h1" style="width:63px;height:63px;" id="h1-bf9a-ba55-95ce-f210-75b3-a65e-7704-2e7a" data-square="h1"><div class="notation-322f9 alpha-d2270">h</div><img src="./img/chesspieces/font-awesome/wR.svg" alt="" class="piece-417db" data-piece="wR" style="width:63px;height:63px;"></div><div class="clearfix-7da63"></div></div></div></div></div>
+
+                <div class="hidden lg:block w-64">
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.b.p">
+                            <img src="/img/chesspieces/font-awesome/bP.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.b.n">
+                            <img src="/img/chesspieces/font-awesome/bN.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.b.b">
+                            <img src="/img/chesspieces/font-awesome/bB.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.b.r">
+                            <img src="/img/chesspieces/font-awesome/bR.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                    <div class="flex flex-row">
+                        <template x-for="(capture, index) in $store.game.captures.b.q">
+                            <img src="/img/chesspieces/font-awesome/bQ.svg" width="30px" :class="index !== 0 ? '-ml-5' : ''">
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div class="flex flex-row mb-10">
+                    <div x-show="$store.game.moves > 0" class="pixel-border animate smaller mr-5" @click="window.game.reset()" style="display: none;">
+                        Resign
+                    </div>
+
+                    <div x-show="$store.game.moves === 0" class="pixel-border animate smaller mr-5" @click="window.game.reset()">
+                        Reset
+                    </div>
+
+                    <div class="pixel-border animate smaller mr-5" @click="window.game.flip()">
+                        Flip
+                    </div>
+                    <div class="pixel-border animate smaller mr-5" @click="aiSettingsOpen = true">
+                        AI
+                    </div>
+                </div>
+
+                <div class="w-24 h-10 text-xs text-fluorescent-blue">
+                    <div x-show="$store.game.thinking === true" x-transition="" style="display: none;">
+                        Thinking...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-settings" x-show="aiSettingsOpen === true" class="fixed top-0 left-0 w-full h-full flex items-center justify-center" style="background: rgba(0, 0, 0, 0.4); display: none;">
+            <div x-show="aiSettingsOpen === true" x-transition="" class="pixel-border w-full h-full lg:h-auto lg:w-1/2 flex flex-col justify-center items-center p-5 text-center" style="display: none;">
+                <h2 class="text-xl text-fluorescent-blue mb-5">
+                    AI Settings
+                </h2>
+
+                <h3 class="text-sm mb-3">
+                    Search Depth
+                </h3>
+
+                <input x-model="$store.game.ai.searchDepth" type="range" min="1" max="4" value="2" class="mb-2">
+
+                <div x-text="$store.game.ai.searchDepth + ' ply'" class="mb-10 text-xs text-phiox">2 ply</div>
+
+                <h3 class="text-sm mb-3">
+                    Max Search Time
+                </h3>
+
+                <input x-model="$store.game.ai.allocatedSearchTime" type="range" min="100" max="60000" value="30000" class="mb-2">
+
+                <div x-text="(Math.round($store.game.ai.allocatedSearchTime / 1000)) + ' seconds'" class="mb-10 text-xs text-phiox">2 seconds</div>
+
+                <div class="pixel-border animate smaller" @click="aiSettingsOpen = false">
+                    Done
+                </div>
+            </div>
+        </section>
+
+        <section id="endgame-screen" x-show="
+                $store.game.inCheckmate === true ||
+                $store.game.inStalemate === true ||
+                $store.game.inDraw === true ||
+                $store.game.insufficientMaterial === true ||
+                $store.game.inThreefoldRepetition === true
+            " class="fixed top-0 left-0 w-full h-full flex items-center justify-center" style="background: rgba(0, 0, 0, 0.4); display: none;">
+            <div x-show="
+                    $store.game.inCheckmate === true ||
+                    $store.game.inStalemate === true ||
+                    $store.game.inDraw === true ||
+                    $store.game.insufficientMaterial === true ||
+                    $store.game.inThreefoldRepetition === true
+                " x-transition="" class="pixel-border w-1/4 flex flex-col justify-center items-center p-5 text-center" style="display: none;">
+                <template x-if="$store.game.inCheckmate === true">
+                    <h2 class="text-xl text-fluorescent-blue mb-8">
+                        Checkmate!
+                    </h2>
+                </template>
+                <template x-if="$store.game.inStalemate === true">
+                    <h2 class="text-xl text-fluorescent-blue mb-8">
+                        Stalemate...
+                    </h2>
+                </template>
+                <template x-if="$store.game.inDraw === true">
+                    <h2 class="text-xl text-fluorescent-blue mb-8">
+                        Draw
+                    </h2>
+                </template>
+                <template x-if="$store.game.insufficientMaterial === true">
+                    <h2 class="text-xl text-fluorescent-blue mb-8">
+                        Draw by insufficient material
+                    </h2>
+                </template>
+                <template x-if="$store.game.inThreefoldRepetition === true">
+                    <h2 class="text-xl text-fluorescent-blue mb-8">
+                        Draw by repetition
+                    </h2>
+                </template>
+
+                <div class="pixel-border animate smaller" @click="window.game.reset()">
+                    Restart
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="flex flex-col justify-center items-center text-center p-5" x-show="gameStarted === false">
+            <h1 class="glitch text-5xl mb-12 leading-tight">
+                Pixel Chess
+            </h1>
+
+            <div class="pixel-border animate w-3/4 lg:w-60 mb-12" @click="gameStarted = true">
+                Start
+            </div>
+
+            <div class="pixel-border animate w-3/4 lg:w-60 mb-12" @click="howItWorksOpen = true">
+                How it works
+            </div>
+
+            <div class="pixel-border animate w-3/4 lg:w-60 mb-12" @click="creditsOpen = true">
+                Credits
+            </div>
+
+        </section>
+
+        <section id="how-it-works" x-show="howItWorksOpen === true" class="fixed top-0 left-0 w-full h-full flex items-center justify-center" style="background: rgba(0, 0, 0, 0.9); display: none;">
+            <div @click="howItWorksOpen = false" class="absolute top-0 right-0 m-5 text-black lg:text-white hover:text-fluorescent-blue text-3xl cursor-pointer">
+                X
+            </div>
+
+            <div x-show="howItWorksOpen === true" x-transition="" class="pixel-border h-full lg:h-auto w-full lg:w-2/3 flex flex-col justify-center items-center p-5 text-center overflow-scroll" style="display: none;">
+                <h2 class="text-xl text-fluorescent-blue mb-5">
+                    How it works
+                </h2>
+                <p class="text-xs mb-5">
+                    The engine behind Pixel Chess works much like any other traditional
+                    chess engine. Written 100% in JavaScript, the AI uses an
+                    algorithm to look a number of moves ahead and then an
+                    evaluation function to decide on the best move.
+                </p>
+                <p class="text-xs mb-5">
+                    This evaluation function takes into consideration a
+                    number of factors, including the material value of pieces,
+                    positioning, mobility and more to weight a score towards
+                    a certain position to be played.
+                </p>
+                <p class="text-xs mb-5">
+                    This project was coded over roughly 2-weeks so there are
+                    many improvements that could be made to the AI.
+                </p>
+            </div>
+        </section>
+
+        <section id="credits" x-show="creditsOpen === true" class="fixed top-0 left-0 w-full h-full flex items-center justify-center" style="background: rgba(0, 0, 0, 0.9); display: none;">
+            <div @click="creditsOpen = false" class="absolute top-0 right-0 m-5 text-black lg:text-white hover:text-fluorescent-blue text-3xl cursor-pointer">
+                X
+            </div>
+
+            <div x-show="creditsOpen === true" x-transition="" class="pixel-border w-full h-full lg:h-auto lg:w-2/3 flex flex-col justify-center items-center p-5 text-center overflow-scroll" style="display: none;">
+                <h2 class="text-xl text-fluorescent-blue mb-5">
+                    Credits
+                </h2>
+                <p class="text-xs mb-10">
+                    Engine programming
+                    <a href="https://barr.media" class="text-phiox hover:opacity-75" target="_blank">
+                        Barr Media
+                    </a>
+                </p>
+                <h2 class="text-xl text-fluorescent-blue mb-5">
+                    With thanks to
+                </h2>
+                <p class="text-xs mb-5">
+                    Legal move validation
+                    <a href="https://github.com/jhlywa/chess.js" class="text-phiox hover:opacity-75" target="_blank">
+                        Chess.js
+                    </a>
+                </p>
+                <p class="text-xs mb-5">
+                    Chessboard
+                    <a href="https://chessboardjs.com/index.html" class="text-phiox hover:opacity-75" target="_blank">
+                        chessboard.js
+                    </a>
+                </p>
+            </div>
+        </section>
+    </main>
+    <script src="js/main.js"></script><img src="./img/chesspieces/font-awesome/wP.svg" id="c8e3-f847-bc31-10ea-dd78-037b-5a27-e61d" alt="" class="piece-417db" data-piece="wP" style="width: 63px; height: 63px; display: none;">
+
+
+</body></html>

@@ -1,0 +1,116 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#main {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    flex-grow: 1;
+}
+
+#sidebar {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    width: 40%;
+}
+
+h1 {
+    color: #333;
+}
+
+p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Chessboard Styles */
+.chessboard {
+    margin: auto;
+}
+
+.square-55d63 {
+    position: relative;
+}
+
+/* Button Styles */
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="button"] {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 20px);
+}
+
+/* Modal Styles */
+.modal-header {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Footer Styles */
+#footer {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.column-a,
+.column-b,
+.column-c,
+.column-d {
+    display: inline-block;
+    width: 23%;
+    vertical-align: top;
+}
+
+.clear_both {
+    clear: both;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    #wrap {
+        flex-direction: column;
+    }
+
+    #sidebar {
+        width: 100%;
+    }
+}
